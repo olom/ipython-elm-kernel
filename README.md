@@ -45,7 +45,6 @@ Filters are classes that extend from `elm_kernel.filters.BaseFilter`
 
 
 ```python
-
 class BaseFilter:
     """
     This is the reference implementation for all filters/hooks.
@@ -63,6 +62,12 @@ class BaseFilter:
 
     def process_text_input(self, lines):
         return lines
+
+    def process_text_output(self, text):
+        """
+        This is called from the kernel when displaying the results of a command back to the User
+        """
+        pass
 
     # This is called from the kernel before feeding input into the IPython Shell
     def process_run_cell(self, code, options):

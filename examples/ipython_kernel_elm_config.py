@@ -1,4 +1,3 @@
-import sys
 import os.path
 import tempfile
 import logging
@@ -25,24 +24,11 @@ class SampleFilter(BaseFilter):
         logger.setLevel(logging.INFO)
         logger.info('STARTED ELM SESSION {}'.format(ident))
 
-        # This intercepts the output of the shell.
-        # The kernel subprocess replaces stdout and stderr by streams that talk over 0MQ.
-        # XXX FIXME: turn the whole modified kernel into another project that extends ipykernel instead
-        # XXX FIXME: the proper way to do this would be to change IPKernelApp.outstream_class to one with logging inside.
-
-        def make_stream_logger(stream, tag):
-            __write = stream.write
-
-            def write(string):
-                logger.info('OUTPUT FROM SHELL {}: {}'.format(tag, string))
-                return __write(string)
-
-            stream.write = write
-
-        make_stream_logger(sys.stdout, 'STDOUT')
-
         kernel.log.info("FILTER REGISTERED for elm-kernel {}".format(ident))
         kernel.log.info("LOGGING USER INTERACTIONS TO {}".format(logfile))
+
+    def process_text_output(self, text):
+        self.logger.info('OUTPUT FROM SHELL: {}'.format(text))
 
     def process_text_input(self, lines):
         output = []
