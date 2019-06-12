@@ -34,7 +34,6 @@ class ElmIPythonKernel(IPythonKernel):
         'file_extension': '.py'
     }
 
-    @gen.coroutine
     def do_execute(self, code, silent, store_history=True,
                    user_expressions=None, allow_stdin=False):
 
