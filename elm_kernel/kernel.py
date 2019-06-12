@@ -15,6 +15,18 @@ class ElmIPythonKernel(IPythonKernel):
     def __init__(self, **kwargs):
         super(ElmIPythonKernel, self).__init__(**kwargs)
 
+        def make_stream_logger(stream):
+            __write = stream.write
+
+            def write(string):
+                for filter_hook in self.code_filters:
+                    filter_hook.process_text_output(string)
+                return __write(string)
+
+            stream.write = write
+
+        make_stream_logger(sys.stdout)
+
         for filter_hook in self.code_filters:
             filter_hook.register(self, self.shell)
 
