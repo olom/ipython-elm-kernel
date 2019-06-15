@@ -4,7 +4,7 @@ import os
 import sys
 import shutil
 from glob import glob
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 DISTNAME = 'elm_kernel'
@@ -17,7 +17,7 @@ URL = 'http://github.com/pardo-bsso/elm_kernel'
 LICENSE = 'BSD'
 REQUIRES = ["ipykernel"]
 INSTALL_REQUIRES = ["ipykernel"]
-PACKAGES = [DISTNAME]
+PACKAGES = find_packages()
 
 CLASSIFIERS = [
     'Intended Audience :: Science/Research',
