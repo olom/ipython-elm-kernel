@@ -58,7 +58,12 @@ setup_args = dict(
     long_description_content_type='text/markdown',
     classifiers=CLASSIFIERS,
     requires=REQUIRES,
-    install_requires=INSTALL_REQUIRES
+    install_requires=INSTALL_REQUIRES,
+    entry_points={
+        'console_scripts': [
+            'elm-kernel-translate=elm_kernel.filters.translate:main'
+        ]
+    },
  )
 
 if any(a.startswith(('bdist', 'build', 'install')) for a in sys.argv):
