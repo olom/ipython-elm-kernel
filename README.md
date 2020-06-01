@@ -102,6 +102,24 @@ translator.add_translation_table(my_extra_translations)
 c.ElmIPythonKernel.code_filters = [translator]
 ```
 
+This filter also installs a command line utility, elm-kernel-translate, to test the translation filter with any
+file outside of Jupyter/IPython.
+
+```bash
+$ elm-kernel-translate --help
+usage: elm-kernel-translate [-h] file
+
+Translates Python code with a subset of Arabic keywords
+
+positional arguments:
+  file        File to translate
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+The file arguments can also be '-' for stdin.
+
 
 ### Filter definition
 
