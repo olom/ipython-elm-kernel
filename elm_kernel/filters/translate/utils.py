@@ -11,8 +11,19 @@ def reverse_translation_table(table):
     return {v: k for k, v in table.items()}
 
 
-def translate(lines, table):
-    tokens = tokenize(BytesIO('\n'.join(lines).encode('utf-8')).readline)
+def lines_to_readline(lines):
+    """
+    Turns a list of code lines into a file-like object to use with tokenize()
+    """
+    return BytesIO('\n'.join(lines).encode('utf-8')).readline
+
+
+def translate_lines(lines, table):
+    return translate(lines_to_readline(lines), table)
+
+
+def translate(readline, table):
+    tokens = tokenize(readline)
     result = []
 
     for toknum, tokval, _, _, _ in tokens:

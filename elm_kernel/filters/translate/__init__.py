@@ -1,6 +1,6 @@
 from ..base import BaseFilter
 from .translation_table import ar_en_map
-from .utils import translate, normalize_translation_table
+from .utils import translate_lines, normalize_translation_table
 
 
 class ArabicTranslate(BaseFilter):
@@ -16,7 +16,7 @@ class ArabicTranslate(BaseFilter):
         kernel.log.info("ArabicTranslate filter registered for elm-kernel {}".format(ident))
 
     def process_text_input(self, lines):
-        return translate(lines, self.translation_table)
+        return translate_lines(lines, self.translation_table)
 
     def add_translation_table(self, table):
         """
