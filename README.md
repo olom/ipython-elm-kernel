@@ -121,6 +121,15 @@ optional arguments:
 The file arguments can also be '-' for stdin.
 
 
+#### Translation helpers
+
+Also the following tools are available:
+
+- elm-kernel-extract-definitions: extracts public function and class definitions from a file
+
+- elm-kernel-generate-po-file: parses a source file and generates a message catalog (gettext style) with the public
+function and classes
+
 ### Filter definition
 
 Filters are classes that extend from `elm_kernel.filters.BaseFilter`
