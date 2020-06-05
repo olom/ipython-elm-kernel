@@ -1,4 +1,7 @@
 import argparse
+
+from os.path import basename
+from string import Template
 from tokenize import tokenize, NAME, INDENT, DEDENT, COLON, NEWLINE, RPAR
 
 from .translation_table import ar_en_map
@@ -73,3 +76,38 @@ def do_extract_file_definitions():
 
     definitions = extract_file_definitions(args.file)
     print (definitions)
+
+
+def do_generate_po_file():
+    parser = argparse.ArgumentParser(description='Creates a message catalog with the file classes and function definitions to send for translation')
+    parser.add_argument('file',   type=argparse.FileType('rb'), help='File to process')
+    parser.add_argument('--output', type=argparse.FileType('w'), help='Output file')
+
+    args = parser.parse_args()
+    output = args.output
+
+
+    file_header = Template(
+'''
+# ipython-elm-kernel translations for file: $filename
+# Copyright (C) Alolom - https://alolom.com
+# This file is distributed under the same license as the ipython-elm-kernel package.
+# Adrián Pardini <github@tangopardo.com.ar>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\\n"
+"Language: ar\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+
+''')
+
+    output.write(file_header.substitute(filename=basename(args.file.name)))
+
+    for definition in extract_file_definitions(args.file):
+        output.write(f"# {definition['type']}\n")
+        output.write(f'msgid "{definition["name"]}"\n')
+        output.write(f'msgstr\n')
+        output.write(f'\n')
