@@ -1,5 +1,6 @@
 import argparse
 
+from os import unlink
 from os.path import basename
 from string import Template
 from tokenize import tokenize, NAME, INDENT, DEDENT, COLON, NEWLINE, RPAR
@@ -104,10 +105,17 @@ msgstr ""
 
 ''')
 
-    output.write(file_header.substitute(filename=basename(args.file.name)))
+    definitions = extract_file_definitions(args.file)
+    if definitions:
+        output.write(file_header.substitute(filename=basename(args.file.name)))
 
-    for definition in extract_file_definitions(args.file):
-        output.write(f"# {definition['type']}\n")
-        output.write(f'msgid "{definition["name"]}"\n')
-        output.write(f'msgstr\n')
-        output.write(f'\n')
+        for definition in definitions:
+            output.write(f"# {definition['type']}\n")
+            output.write(f'msgid "{definition["name"]}"\n')
+            output.write(f'msgstr\n')
+            output.write(f'\n')
+    else:
+        try:
+            unlink(output.name)
+        except FileNotFoundError:
+            pass    # when called with stdout as output
