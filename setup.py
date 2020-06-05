@@ -61,7 +61,7 @@ setup_args = dict(
     install_requires=INSTALL_REQUIRES,
     entry_points={
         'console_scripts': [
-            'elm-kernel-translate=elm_kernel.filters.translate:main'
+            'elm-kernel-translate=elm_kernel.filters.translate.commands:do_translate_file',
         ]
     },
  )
