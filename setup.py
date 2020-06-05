@@ -62,6 +62,7 @@ setup_args = dict(
     entry_points={
         'console_scripts': [
             'elm-kernel-translate=elm_kernel.filters.translate.commands:do_translate_file',
+            'elm-kernel-extract-definitions=elm_kernel.filters.translate.commands:do_extract_file_definitions'
         ]
     },
  )
